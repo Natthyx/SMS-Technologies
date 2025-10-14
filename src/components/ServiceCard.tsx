@@ -27,7 +27,7 @@ export default function ServiceCard({
 
   return (
     <motion.div
-      className={`w-[420px] p-10 rounded-2xl transition-all duration-500 shadow-lg flex flex-col items-center text-center ${
+      className={`w-[420px] sm:w-[350px] p-10 rounded-2xl transition-all duration-500 shadow-lg flex flex-col items-center text-center ${
         gradientStyles[gradient]
       } ${isGradient ? 'text-white scale-105' : 'text-gray-800 hover:scale-105 hover:shadow-xl'}`}
       whileHover={{ y: -10 }}

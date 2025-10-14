@@ -31,7 +31,7 @@ export default function HireUsSection() {
       <BubbleShape className="top-32 right-32" size={80} color="#7E69FF" delay={2} duration={18} />
       <BubbleShape className="bottom-20 right-20" size={120} color="#FE3D41" delay={4} duration={20} />
       <BubbleShape className="bottom-2 left-1/4" size={60} color="#FFFFFF" delay={1} duration={12} />
-            
+
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
@@ -57,7 +57,7 @@ export default function HireUsSection() {
               {/* Left - Contact Information */}
               <div className="text-white">
                 <h3 className="text-2xl font-bold mb-8 mt-5 md:mt-2">Contact Information</h3>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-white/20  flex items-center justify-center flex-shrink-0">
@@ -65,7 +65,7 @@ export default function HireUsSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">Email</h4>
-                      <p className="text-white/80">smstechaddis@gmail.com</p>
+                      <p className="text-white/80">smstechnologies.dev@gmail.com</p>
                     </div>
                   </div>
 
@@ -165,24 +165,40 @@ export default function HireUsSection() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-white mb-2">Select Subject?</label>
-                    <div className="flex flex-wrap gap-4">
-                      {['General Inquiry', 'Brand Identity', 'UI/UX', 'Packaging Design'].map((option) => (
-                        <label key={option} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="subject"
-                            value={option}
-                            checked={formData.subject === option}
-                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                            className="w-4 h-4"
-                          />
-                          <span className="text-white text-sm">{option}</span>
-                        </label>
-                      ))}
+                  <div className="relative">
+                    <label htmlFor="subject" className="block text-sm font-medium text-white mb-2">
+                      Select Subject
+                    </label>
+
+                    {/* Gradient border wrapper */}
+                    <div className="relative rounded-lg p-[1px]">
+                      <select
+                        id="subject"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white border-none focus:outline-none focus:ring-2 focus:ring-white/50 appearance-none pr-10"
+                      >
+                        <option value="general" className="bg-[#2C40F3] text-white">General Inquiry</option>
+                        <option value="brand" className="bg-[#2C40F3] text-white">Web Development</option>
+                        <option value="uiux" className="bg-[#2C40F3] text-white">Mobile Development</option>
+                        <option value="packaging" className="bg-[#2C40F3] text-white">Networking Service</option>
+                      </select>
+
+                      {/* Custom dropdown arrow */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white pointer-events-none transition-transform duration-300 group-hover:rotate-180"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
                     </div>
                   </div>
+
+
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-white mb-2">Message</label>
