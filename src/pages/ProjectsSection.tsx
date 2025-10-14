@@ -14,21 +14,32 @@ export default function ProjectsSection() {
       bgColor: 'bg-[#F1F2FF]/35'
     },
     {
-      title: 'Kelal Stock Inventory Management System',
-      description: 'A practical and efficient mobile app that simplifies inventory tracking for retail stores and small businesses. Store owners can track stock levels, manage inventory, and receive product notifications automatically improving accuracy and saving time.',
-      images: [
-        '/assets/system.png',
-      ],
-      bgColor: 'bg-[#FFF4F4]/55'
-    },
-    {
       title: 'System Management Web App',
       description: 'A powerful web system that strengthens client-company relationships by allowing customers to track the repair and maintenance status of their devices online. It provides real-time updates, transparent communication, and helps companies manage service operations efficiently.',
       images: [
-        '/assets/stock.png',
+        '/assets/system.png',
+        
         
       ],
       bgColor: 'bg-[#F0FFF7]/70'
+    },
+    {
+      title: 'Kelal Stock Inventory Management System',
+      description: 'A practical and efficient mobile app that simplifies inventory tracking for retail stores and small businesses. Store owners can track stock levels, manage inventory, and receive product notifications automatically improving accuracy and saving time.',
+      images: [
+        '/assets/stock.png',
+      ],
+      bgColor: 'bg-[#FFF4F4]/55'
+    },
+    
+    {
+      title: 'Pro-KidTek Computer Technologies',
+      description: 'A modern and responsive website designed for Pro-KidTek, a computer sales company.It highlights their products, partners, and services in a clean, user-friendly interface that reflects professionalism and builds customer confidence.',
+      images: [
+        '/assets/prokidtek.png',
+        
+      ],
+      bgColor: 'bg-[#A8FFD1]/60'
     }
   ];
 

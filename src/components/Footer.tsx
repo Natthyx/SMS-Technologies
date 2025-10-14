@@ -4,7 +4,7 @@ import StaticCircle from './StaticCircle.tsx';
 
 export default function Footer() {
   return (
-    <footer className="relative bg-white text-black py-12 overflow-hidden">
+    <footer className="relative bg-white text-black py-5 overflow-hidden">
       {/* Add the circle inside the footer */}
       <StaticCircle
         className="-bottom-[100px] -left-[100px] z-10"
@@ -35,7 +35,7 @@ export default function Footer() {
 
           {/* Contact Information */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Contact Us</h3>
+            <h3 className="text-lg font-bold mb-4 mt-9">Contact Us</h3>
             <div className="space-y-3 text-sm text-black">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5" />
@@ -43,18 +43,18 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5" />
-                <span>011-5-54-08-57/58</span>
+                <span>+251911876353 / +251972289275</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
-                <span>smstechnologies@gmail.com</span>
+                <span>smstechaddis@gmail.com</span>
               </div>
             </div>
           </div>
 
           {/* Social Media */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Social Media</h3>
+            <h3 className="text-lg font-bold mb-4 mt-9">Social Media</h3>
             <div className="flex gap-4">
               <a href="#" className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors">
                 <Facebook className="w-5 h-5" />
@@ -68,11 +68,7 @@ export default function Footer() {
               <a href="#" className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors">
                 <MessageCircle className="w-5 h-5" />
               </a>
-              <a href="#" className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-              </a>
+              
             </div>
           </div>
         </div>

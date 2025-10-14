@@ -82,7 +82,8 @@ export default function Header() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Hire Us
+          <a href="#contact-us">
+            Hire Us </a>
           </motion.button>
         </div>
       </nav>

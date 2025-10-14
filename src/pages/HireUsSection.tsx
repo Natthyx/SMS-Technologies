@@ -1,6 +1,6 @@
 // ... existing code ...
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Facebook, Twitter, Instagram, MessageCircle, Music } from 'lucide-react';
+import { Mail, MapPin, Phone, Facebook, Twitter, Instagram, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import CircleShape from '../components/CircleShape.tsx';
 import BubbleShape from '../components/BubbleShape.tsx';
@@ -65,7 +65,7 @@ export default function HireUsSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">Email</h4>
-                      <p className="text-white/80">smstechnologies@gmail.com</p>
+                      <p className="text-white/80">smstechaddis@gmail.com</p>
                     </div>
                   </div>
 
@@ -85,7 +85,7 @@ export default function HireUsSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">Phone</h4>
-                      <p className="text-white/80">011-15-68-08-237(04)</p>
+                      <p className="text-white/80">+251911876353 / +251972289275</p>
                     </div>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export default function HireUsSection() {
 
                   <motion.button
                     type="submit"
-                    className="w-full bg-white text-[#5300FF] px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-all duration-300"
+                    className="w-full bg-white text-[#5300FF] px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-all duration-300 hover:bg-[#5300FF] hover:text-white"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

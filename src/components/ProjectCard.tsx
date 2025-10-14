@@ -34,12 +34,12 @@ export default function ProjectCard({ title, description, images, bgColor }: Pro
         <div className="flex-1 flex flex-col justify-center">
           <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-[#5300FF] to-[#2D0D6F] bg-clip-text text-transparent">{title}</h3>
           <p className="text-[#4A5568] mb-6 leading-relaxed">{description}</p>
-          <motion.button
+          {/* <motion.button
             className="flex items-center gap-2 bg-gradient-to-r from-[#5300FF] to-[#2D0D6F] bg-clip-text text-transparent font-medium hover:gap-4 transition-all"
             whileHover={{ x: 5 }}
           >
             Read more <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          </motion.button> */}
         </div>
       </div>
     </motion.div>

@@ -6,25 +6,25 @@ export default function DevelopmentSection() {
     {
       number: '1',
       title: 'Assemble the right team',
-      description: 'We start every project by carefully choosing the right team that you don\'t have the time, expertise, or desire to do.',
+      description: 'We handle all aspects of vetting and choosing the right team that you don\'t have the time, expertise, or desire to do.',
       icon: <Users className="w-8 h-8" />
     },
     {
       number: '2',
       title: 'Sprint planning',
-      description: 'Sprint planning is a collective planning effort. Team members collaborate to clarify items and ensure shared understanding.',
+      description: 'Sprint roadmap is a collective planning effort. Team members collaborate to clarify items and ensure shared understanding.',
       icon: <Zap className="w-8 h-8" />
     },
     {
       number: '3',
       title: 'Tech architecture',
-      description: 'We identify the best technology and microservices. Decoupling the code allows teams to move faster and more independently.',
+      description: 'We break monolithic apps into microservices. Decoupling the code allows teams to move faster and more independently',
       icon: <Code className="w-8 h-8" />
     },
     {
       number: '4',
       title: 'Code reviews',
-      description: 'Code reviews before release help detect issues like memory leaks, file descriptor leaks, performance, and general bad smells.',
+      description: 'Code reviews before release help detect issues like memory leaks, file leaks, performance signs, and general bad smells.',
       icon: <GitBranch className="w-8 h-8" />
     },
     {
@@ -46,9 +46,9 @@ export default function DevelopmentSection() {
         >
           <div className="w-16 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-6"></div>
           <h2 className="text-4xl md:text-5xl font-bold">
-            Roadmap to <span className="text-purple-600">Achievement</span>
+            How development through <br></br> <span className="text-purple-600">SMS Technologies works</span>
           </h2>
-          <p className="text-gray-600 mt-4 text-lg">How we turn your vision into reality</p>
+          {/* <p className="text-gray-600 mt-4 text-lg">How we turn your vision into reality</p> */}
         </motion.div>
 
         <div className="relative max-w-5xl mx-auto">
