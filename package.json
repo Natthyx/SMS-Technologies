@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
+    "@emailjs/browser": "^4.4.1",
     "@headlessui/react": "^2.2.9",
     "ai": "^5.0.70",
     "cannon-es": "^0.20.0",
     "clsx": "^2.1.1",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
     "i18next": "^25.6.0",
