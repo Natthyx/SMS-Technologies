@@ -21,16 +21,16 @@ const testimonials: Testimonial[] = [
     image: '/assets/yonas.jpg'
   },
   {
-    name: 'Kidist',
+    name: 'Kidist Tekeste',
     role: 'President',
     company: 'ProKidTek Computer Technologies',
     content: "SMS Technologies delivered a clean, modern, and professional website that truly reflects our brand. Their team's attention to detail and commitment to quality made the entire process smooth and rewarding.",
     rating: 5,
-    image: '/assets/prokid.jpg'
+    image: '/assets/prokid.png'
     
   },
   {
-    name: 'Yosan tsegaye',
+    name: 'Yosan Tsegaye',
     role: 'Manager',
     company: 'Short Ride (Rwanda)',
     content: "The Short Ride app developed by SMS Technologies is fast, reliable, and perfectly tailored for our market. Their professionalism and technical expertise exceeded our expectations.",
