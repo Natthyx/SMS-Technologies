@@ -244,13 +244,13 @@ export default function HireUsSection() {
                       <option value="general" className="bg-[#2C40F3] text-white">
                         General Inquiry
                       </option>
-                      <option value="brand" className="bg-[#2C40F3] text-white">
-                        Web Development
+                      <option value="Website Development" className="bg-[#2C40F3] text-white">
+                        Website Development
                       </option>
-                      <option value="uiux" className="bg-[#2C40F3] text-white">
-                        Mobile Development
+                      <option value="Mobile App Development" className="bg-[#2C40F3] text-white">
+                        Mobile App Development
                       </option>
-                      <option value="packaging" className="bg-[#2C40F3] text-white">
+                      <option value="Networking Service" className="bg-[#2C40F3] text-white">
                         Networking Service
                       </option>
                     </select>
