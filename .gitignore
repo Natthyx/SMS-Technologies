@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+.idea
+.vscode
+.git
+.gitattributes
+.gitmodules
+.gitkeep
+.gitlab-ci.yml
+.env
+smsserviceAccount.json
