@@ -1,6 +1,8 @@
 // ... existing code ...
-import { Mail, MapPin, Phone, Facebook, Twitter, Instagram, MessageCircle, Music } from 'lucide-react';
+import { Mail, MapPin, Phone, Facebook, Twitter, Instagram, MessageCircle, Music, Shield } from 'lucide-react';
 import StaticCircle from './StaticCircle.tsx';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
@@ -72,7 +74,21 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
+      <motion.div
+        className="fixed bottom-8 right-8 z-50 text-dark"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <Link 
+          to="/login"
+          className="flex items-center justify-center w-14 h-14 bg-dark text-[#5300FF] rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+        >
+          <Shield className="w-6 h-6" />
+        </Link>
+      </motion.div>
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-gray-400">
           <p>&copy; 2025 SMS Technologies. All rights reserved.</p>
         </div>

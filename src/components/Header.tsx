@@ -1,9 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
-  const navItems = ['Home', 'About us', 'Services', 'Projects'];
+  const navigate = useNavigate();
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About us', path: '/#about-us' },
+    { name: 'Services', path: '/#services' },
+    { name: 'Projects', path: '/#projects' },
+    { name: 'Career', path: '/career' },
+  ];
   const [isOnLightBg, setIsOnLightBg] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -34,6 +42,18 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleHireUsClick = () => {
+    // Navigate to homepage and scroll to contact section
+    navigate('/');
+    // Use setTimeout to ensure navigation completes before scrolling
+    setTimeout(() => {
+      const contactSection = document.getElementById('contact-us');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-lg ${
@@ -59,17 +79,30 @@ export default function Header() {
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex items-center space-x-8">
             {navItems.map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  className={`transition-colors duration-300 ${
-                    isOnLightBg
-                      ? 'text-gray-900 hover:text-blue-600'
-                      : 'text-white hover:text-blue-200'
-                  }`}
-                >
-                  {item}
-                </a>
+              <li key={item.name}>
+                {item.name === 'Career' ? (
+                  <Link
+                    to={item.path}
+                    className={`transition-colors duration-300 ${
+                      isOnLightBg
+                        ? 'text-gray-900 hover:text-blue-600'
+                        : 'text-white hover:text-blue-200'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.path}
+                    className={`transition-colors duration-300 ${
+                      isOnLightBg
+                        ? 'text-gray-900 hover:text-blue-600'
+                        : 'text-white hover:text-blue-200'
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -82,8 +115,9 @@ export default function Header() {
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleHireUsClick}
           >
-            <a href="#contact-us">Hire Us</a>
+            Hire Us
           </motion.button>
         </div>
 
@@ -127,14 +161,24 @@ export default function Header() {
           >
             <ul className="flex flex-col space-y-4">
               {navItems.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
-                    className="block text-lg font-medium hover:opacity-80 transition-opacity"
-                    onClick={() => setMenuOpen(false)} // close on click
-                  >
-                    {item}
-                  </a>
+                <li key={item.name}>
+                  {item.name === 'Career' ? (
+                    <Link
+                      to={item.path}
+                      className="block text-lg font-medium hover:opacity-80 transition-opacity"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.path}
+                      className="block text-lg font-medium hover:opacity-80 transition-opacity"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  )}
                 </li>
               ))}
 
@@ -146,9 +190,12 @@ export default function Header() {
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  setMenuOpen(false);
+                  handleHireUsClick();
+                }}
               >
-                <a href="#contact-us">Hire Us</a>
+                Hire Us
               </motion.button>
             </ul>
           </motion.div>

@@ -10,6 +10,7 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": true,
+    "resolveJsonModule": true,
 
     /* Linting */
     "strict": true,
@@ -17,5 +18,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.js"]
+  "include": ["vite.config.js", "smsserviceAccount.json"]
 }
