@@ -264,7 +264,7 @@ export default function CareerPage() {
                     Project Manager
                   </option>
                   <option value="qa-engineer" className="bg-[#2C40F3] text-white">
-                    QA Engineer
+                    Sales Person
                   </option>
                 </select>
               </div>
