@@ -1,0 +1,26 @@
+{
+  "short_name": "SMS Tech",
+  "name": "SMS Technologies",
+  "description": "Turning Ideas into Reliable Digital Solutions",
+  "icons": [
+    {
+      "src": "/assets/sms-logo.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/sms-logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/sms-logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2C40F3",
+  "background_color": "#C1BBF4"
+}

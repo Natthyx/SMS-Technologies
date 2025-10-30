@@ -5,6 +5,7 @@ import { Lock, Mail } from "lucide-react";
 // Firebase imports
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import SEO from "../components/SEO.tsx";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -48,6 +49,16 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#C1BBF4]/90 to-[#2C40F3]/90 flex items-center justify-center px-4">
+      <SEO 
+        title="Admin Login - SMS Technologies"
+        description="Secure login portal for SMS Technologies administrators and staff members."
+        keywords="admin login, secure portal, SMS Technologies, staff portal"
+        ogTitle="Admin Login - SMS Technologies"
+        ogDescription="Secure login portal for SMS Technologies administrators and staff members."
+        twitterTitle="Admin Login - SMS Technologies"
+        twitterDescription="Secure login portal for SMS Technologies administrators and staff members."
+        canonicalUrl="https://smstechnologieset.com/login"
+      />
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">

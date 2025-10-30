@@ -51,7 +51,7 @@ export default function TrustSection() {
           transition={{ duration: 0.6 }}
         >
           <img
-            src="/assets/about-us.HEIC"
+            src="/assets/about-us.jpg"
             alt="SMS Technologies Logo"
             className="w-full h-full object-cover"
           />

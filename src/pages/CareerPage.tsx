@@ -5,10 +5,22 @@ import CircleShape from "../components/CircleShape.tsx";
 import BubbleShape from "../components/BubbleShape.tsx";
 import { Plus, X } from "lucide-react";
 import Header from "../components/Header.tsx";
+import SEO from "../components/SEO.tsx";
 
 // Firebase imports
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
+
+// Type for environment variables
+interface ImportMetaEnv {
+  readonly VITE_EMAILJS_SERVICE_ID: string;
+  readonly VITE_EMAILJS_AUTO_TEMPLATE_ID: string;
+  readonly VITE_EMAILJS_PUBLIC_KEY: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
 
 export default function CareerPage() {
   const [formData, setFormData] = useState({
@@ -101,8 +113,8 @@ export default function CareerPage() {
       
       // Then, send confirmation email via EmailJS
       const result = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID!,
-        import.meta.env.VITE_EMAILJS_AUTO_TEMPLATE_ID!,
+        (import.meta as ImportMeta).env.VITE_EMAILJS_SERVICE_ID,
+        (import.meta as ImportMeta).env.VITE_EMAILJS_AUTO_TEMPLATE_ID,
         {
           subject: "Career Application Confirmation",
           to_email: formData.email,
@@ -110,7 +122,7 @@ export default function CareerPage() {
           reply_to: "smstechnologies.dev@gmail.com",
           message: "Thank you for applying. The team will contact you if you are fit for the role."
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY!
+        (import.meta as ImportMeta).env.VITE_EMAILJS_PUBLIC_KEY
       );
 
       if (result.text === "OK") {
@@ -141,6 +153,16 @@ export default function CareerPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-bl from-[#C1BBF4]/90 to-[#2C40F3]/90 relative overflow-hidden">
+      <SEO 
+        title="Careers at SMS Technologies - Join Our Team"
+        description="Explore career opportunities at SMS Technologies. We're hiring for frontend developers, backend developers, full stack developers, UI/UX designers, project managers, and sales professionals."
+        keywords="career, job opportunities, software development jobs, tech jobs, frontend developer, backend developer, full stack developer, UI/UX designer, project manager, sales person, IT jobs, SMS Technologies"
+        ogTitle="Careers at SMS Technologies - Join Our Team"
+        ogDescription="Explore career opportunities at SMS Technologies. We're hiring for frontend developers, backend developers, full stack developers, UI/UX designers, project managers, and sales professionals."
+        twitterTitle="Careers at SMS Technologies - Join Our Team"
+        twitterDescription="Explore career opportunities at SMS Technologies. We're hiring for frontend developers, backend developers, full stack developers, UI/UX designers, project managers, and sales professionals."
+        canonicalUrl="https://smstechnologieset.com/career"
+      />
       <Header />
       
       {/* Background circles */}
