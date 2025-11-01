@@ -2,8 +2,8 @@ import TestimonialSlider from '../components/TestimonialSlider.tsx';
 
 export default function TestimonialsSection() {
   return (
-    <section id='testimonials' className="py-20 bg-white">
-      <div className="container mx-auto px-6">
+    <section id='testimonials' className="py-20 bg-grey">
+      <div className="container mx-auto px-2">
         <div className="text-center mb-16">
           <div className="w-16 h-1 bg-gradient-to-r from-purple-600 to-blue-600 mx-auto mb-6"></div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

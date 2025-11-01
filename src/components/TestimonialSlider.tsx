@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     content:
       "Working with SMS Technologies has been a great experience. Their team is professional, responsive, and always willing to go the extra mile. The apps they built for us (Kelal Stock, Echo Survey, and System Management) were delivered on time, with excellent design and functionality. We're proud to partner with them for our digital solutions.",
     rating: 5,
-    image: "/assets/yonas.jpg",
+    image: "/assets/yonas-mobile.png",
   },
   {
     id: 2,
@@ -94,16 +94,17 @@ export default function TestimonialSlider() {
 
   return (
     <div className="relative w-4/5 mx-auto px-4 py-8">
-      <div className="flex gap-8 md:gap-12 lg:gap-20">
+      {/* Desktop layout - pagination on left */}
+      <div className="hidden md:flex gap-4 md:gap-8 lg:gap-12">
         {/* Pagination Numbers */}
-        <div className="flex flex-col gap-4 md:gap-6 flex-shrink-0 justify-center">
+        <div className="flex flex-col gap-2 md:gap-4 lg:gap-6 flex-shrink-0 justify-center">
           {testimonials.map((_, index) => (
             <motion.button
               key={index}
               onClick={() => handlePaginationClick(index)}
-              animate={{ scale: index === currentIndex ? 1.5 : 1 }}
+              animate={{ scale: index === currentIndex ? 1.3 : 1 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`text-xl md:text-2xl font-semibold ${
+              className={`text-base md:text-xl lg:text-2xl font-semibold ${
                 index === currentIndex ? "text-purple-600" : "text-gray-400 hover:text-gray-600"
               }`}
             >
@@ -112,7 +113,7 @@ export default function TestimonialSlider() {
           ))}
         </div>
 
-        <div className="flex-1 min-h-[24rem] overflow-hidden relative">
+        <div className="flex-1 min-h-[16rem] md:min-h-[24rem] overflow-hidden relative">
           <AnimatePresence custom={direction} initial={false}>
             <motion.div
               key={currentIndex}
@@ -121,11 +122,11 @@ export default function TestimonialSlider() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ type: "tween", duration: 0.8 }}
-              className="absolute top-0 left-0 w-full h-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 lg:gap-16"
+              transition={{ type: "tween", duration: 0.5 }}
+              className="absolute top-0 left-0 w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 lg:gap-16"
             >
               {/* Image Column */}
-              <div className="flex-shrink-0 w-full md:w-1/2 h-full">
+              <div className="flex-shrink-0 w-full h-48 md:h-64 md:w-1/2">
                 <img
                   src={testimonials[currentIndex].image}
                   alt={testimonials[currentIndex].name}
@@ -134,19 +135,76 @@ export default function TestimonialSlider() {
               </div>
 
               {/* Content Column */}
-              <div className="flex-1 flex flex-col gap-4 max-w-lg text-center md:text-left justify-center h-full">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              <div className="flex-1 flex flex-col gap-3 md:gap-4 max-w-full md:max-w-lg text-center md:text-left justify-center h-full px-2 md:px-0">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
                   {testimonials[currentIndex].name}
                 </h2>
-                <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
                   "{testimonials[currentIndex].content}"
                 </p>
-                <div className="mt-2 text-gray-600">
+                <div className="mt-1 md:mt-2 text-gray-600 text-sm md:text-base">
                   {testimonials[currentIndex].role}, {testimonials[currentIndex].company}
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Mobile layout - pagination on bottom */}
+      <div className="md:hidden flex flex-col gap-6">
+        <div className="min-h-[16rem] overflow-hidden relative">
+          <AnimatePresence custom={direction} initial={false}>
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ type: "tween", duration: 0.5 }}
+              className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center gap-4"
+            >
+              {/* Image */}
+              <div className="flex-shrink-0 w-full h-48">
+                <img
+                  src={testimonials[currentIndex].image}
+                  alt={testimonials[currentIndex].name}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 flex flex-col gap-3 max-w-full text-center justify-center h-full px-2">
+                <h2 className="text-xl font-bold text-gray-900">
+                  {testimonials[currentIndex].name}
+                </h2>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  "{testimonials[currentIndex].content}"
+                </p>
+                <div className="mt-1 text-gray-600 text-sm">
+                  {testimonials[currentIndex].role}, {testimonials[currentIndex].company}
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Pagination Numbers - Bottom for mobile */}
+        <div className="flex justify-center gap-4 py-2">
+          {testimonials.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => handlePaginationClick(index)}
+              animate={{ scale: index === currentIndex ? 1.3 : 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className={`text-base font-semibold ${
+                index === currentIndex ? "text-purple-600" : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {String(index + 1).padStart(2, "0")}.
+            </motion.button>
+          ))}
         </div>
       </div>
     </div>
