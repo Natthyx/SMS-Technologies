@@ -6,6 +6,7 @@ import TestimonialsSection from './TestimonialsSection.tsx';
 import ProjectsSection from './ProjectsSection.tsx';
 import DevelopmentSection from './DevelopmentSection.tsx';
 import HireUsSection from './HireUsSection.tsx';
+import PriceCalculatorSection from './PriceCalculatorSection.tsx';
 import SEO from '../components/SEO.tsx';
 
 export default function HomePage() {
@@ -29,6 +30,7 @@ export default function HomePage() {
         <TestimonialsSection />
         <ProjectsSection />
         <DevelopmentSection />
+        <PriceCalculatorSection />
         <HireUsSection />
       </main>
     </div>

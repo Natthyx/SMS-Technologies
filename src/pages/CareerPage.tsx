@@ -1,3 +1,4 @@
+/// <reference types="../env.d.ts" />
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
@@ -10,17 +11,6 @@ import SEO from "../components/SEO.tsx";
 // Firebase imports
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-
-// Type for environment variables
-interface ImportMetaEnv {
-  readonly VITE_EMAILJS_SERVICE_ID: string;
-  readonly VITE_EMAILJS_AUTO_TEMPLATE_ID: string;
-  readonly VITE_EMAILJS_PUBLIC_KEY: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
 
 export default function CareerPage() {
   const [formData, setFormData] = useState({
@@ -113,8 +103,8 @@ export default function CareerPage() {
       
       // Then, send confirmation email via EmailJS
       const result = await emailjs.send(
-        (import.meta as ImportMeta).env.VITE_EMAILJS_SERVICE_ID,
-        (import.meta as ImportMeta).env.VITE_EMAILJS_AUTO_TEMPLATE_ID,
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_AUTO_TEMPLATE_ID,
         {
           subject: "Career Application Confirmation",
           to_email: formData.email,
@@ -122,7 +112,7 @@ export default function CareerPage() {
           reply_to: "smstechnologies.dev@gmail.com",
           message: "Thank you for applying. The team will contact you if you are fit for the role."
         },
-        (import.meta as ImportMeta).env.VITE_EMAILJS_PUBLIC_KEY
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
       if (result.text === "OK") {
@@ -187,6 +177,12 @@ export default function CareerPage() {
           <p className="text-white/80 mt-4 max-w-2xl mx-auto">
             We're always looking for talented individuals to join our growing team. Submit your application below.
           </p>
+          {/* Not hiring message */}
+          <div className="mt-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg max-w-2xl mx-auto">
+            <p className="text-red-200 font-medium">
+              We are currently not hiring. Please check back later for future opportunities.
+            </p>
+          </div>
         </motion.div>
 
         {/* Main container */}
@@ -360,24 +356,12 @@ export default function CareerPage() {
 
               <motion.button
                 type="submit"
-                disabled={status === "sending"}
-                className={`w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${
-                  status === "success"
-                    ? "bg-green-500 text-white"
-                    : status === "error"
-                    ? "bg-red-500 text-white"
-                    : "bg-white text-[#5300FF] hover:bg-[#5300FF] hover:text-white"
-                }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={true}
+                className={`w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300 bg-gray-500 text-gray-300 cursor-not-allowed`}
+                whileHover={{ scale: 1 }}
+                whileTap={{ scale: 1 }}
               >
-                {status === "sending"
-                  ? "Submitting Application..."
-                  : status === "success"
-                  ? "Application Submitted!"
-                  : status === "error"
-                  ? "Error! Try Again"
-                  : "Submit Application"}
+                Not Accepting Applications
               </motion.button>
             </form>
           </motion.div>
