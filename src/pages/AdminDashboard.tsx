@@ -8,6 +8,7 @@ import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import emailjs from "@emailjs/browser";
 import SEO from "../components/SEO.tsx";
+import AdminPricingManagement from '../components/AdminPricingManagement';
 
 export default function AdminDashboard() {
     const [applications, setApplications] = useState<any[]>([]);
@@ -16,6 +17,7 @@ export default function AdminDashboard() {
     const [user, setUser] = useState<any>(null);
     const [showEmailModal, setShowEmailModal] = useState(false);
     const [showResumeModal, setShowResumeModal] = useState(false);
+    const [activeTab, setActiveTab] = useState('applications'); // Add this state for tab navigation
     const [emailData, setEmailData] = useState({
         subject: "",
         message: ""
@@ -337,365 +339,233 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#C1BBF4]/90 to-[#2C40F3]/90">
+    <div className="min-h-screen bg-gray-50">
       <SEO 
         title="Admin Dashboard - SMS Technologies"
-        description="Admin dashboard for managing career applications at SMS Technologies. Review, accept, or reject job applications."
-        keywords="admin dashboard, career applications, job applications, SMS Technologies, application management"
-        ogTitle="Admin Dashboard - SMS Technologies"
-        ogDescription="Admin dashboard for managing career applications at SMS Technologies. Review, accept, or reject job applications."
-        twitterTitle="Admin Dashboard - SMS Technologies"
-        twitterDescription="Admin dashboard for managing career applications at SMS Technologies. Review, accept, or reject job applications."
-        canonicalUrl="https://smstechnologieset.com/admin/dashboard"
+        description="Admin dashboard for managing applications and pricing"
+        keywords="admin, dashboard, applications, pricing, management"
+        canonicalUrl="https://smstechnologieset.com/admin"
       />
+      
       {/* Header */}
-      <header className="bg-white/10 backdrop-blur-lg border-b border-white/20">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="bg-white/20 rounded-full p-2">
-              <img src="/assets/sms-logo.png" alt="SMS Technologies" className="h-8 w-auto" />
-            </div>
-            <h1 className="text-xl font-bold text-white">Admin Dashboard</h1>
+      <header className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-700">Welcome, Admin</span>
+            <button
+              onClick={handleLogout}
+              className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </button>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors"
-          >
-            <LogOut size={18} />
-            <span>Logout</span>
-          </button>
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">Career Applications</h2>
-          <p className="text-white/80">Manage and review job applications ({applications.length} total)</p>
+      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* Tab Navigation */}
+        <div className="mb-8 border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('applications')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'applications'
+                    ? 'border-purple-500 text-purple-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Applications
+            </button>
+            <button
+              onClick={() => setActiveTab('pricing')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'pricing'
+                    ? 'border-purple-500 text-purple-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Pricing Management
+            </button>
+          </nav>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Applications Table */}
-          <div className="lg:w-1/2">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg border border-white/20 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-white/20">
-                  <thead className="bg-white/5">
-                    <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white/80 uppercase tracking-wider">Name</th>
-                      {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white/80 uppercase tracking-wider">Email</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white/80 uppercase tracking-wider">Role</th> */}
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white/80 uppercase tracking-wider">Date</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white/80 uppercase tracking-wider">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/10">
-                    {applications.map((application) => (
-                      <tr 
-                        key={application.id} 
+        {/* Tab Content */}
+        {activeTab === 'applications' ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Applications List */}
+            <div className="lg:col-span-1">
+              <div className="bg-white shadow rounded-lg overflow-hidden">
+                <div className="px-6 py-5 border-b border-gray-200">
+                  <h2 className="text-lg font-medium text-gray-900">Applications</h2>
+                </div>
+                <div className="divide-y divide-gray-200">
+                  {loading ? (
+                    <div className="px-6 py-4 text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+                    </div>
+                  ) : (
+                    applications.map((application) => (
+                      <div
+                        key={application.id}
                         onClick={() => handleApplicationClick(application)}
-                        className={`cursor-pointer hover:bg-white/5 transition-colors ${
-                          selectedApplication?.id === application.id ? 'bg-white/10' : ''
+                        className={`p-6 cursor-pointer hover:bg-gray-50 ${
+                            selectedApplication?.id === application.id ? 'bg-purple-50' : ''
                         }`}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{application.name}</td>
-                        {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80">{application.email}</td> */}
-                        {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80 capitalize">
-                          {application.role?.replace("-", " ")}
-                        </td> */}
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/80">
-                          {formatDateTime(application.submittedAt)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            application.status === 'pending' 
-                              ? 'bg-yellow-100 text-yellow-800' 
-                              : application.status === 'accepted' 
-                              ? 'bg-green-100 text-green-800'
-                              : application.status === 'rejected'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-blue-100 text-blue-800'
-                          }`}>
-                            {application.status?.charAt(0).toUpperCase() + application.status?.slice(1)}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              {applications.length === 0 && (
-                <div className="text-center py-12">
-                  <FileText className="mx-auto h-12 w-12 text-white/60 mb-4" />
-                  <h3 className="text-lg font-medium text-white mb-2">No applications yet</h3>
-                  <p className="text-white/80">When candidates apply for positions, their applications will appear here.</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Application Detail Panel */}
-          <div className="lg:w-1/2">
-            {selectedApplication ? (
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg border border-white/20 h-full">
-                <div className="p-6 border-b border-white/20">
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-white/20 rounded-full p-2">
-                        <User className="text-white" size={20} />
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="text-lg font-medium text-gray-900">{application.name}</h3>
+                            <p className="text-sm text-gray-500">{application.role?.replace('-', ' ')}</p>
+                          </div>
+                          <div className="flex flex-col items-end">
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                application.status === 'accepted' ? 'bg-green-100 text-green-800' :
+                                application.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                                'bg-yellow-100 text-yellow-800'
+                            }`}>
+                              {application.status || 'pending'}
+                            </span>
+                            <p className="text-xs text-gray-500 mt-1">{formatDateTime(application.submittedAt)}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-white">{selectedApplication.name}</h3>
-                        <p className="text-white/80 capitalize">
-                          Applying for: {selectedApplication.role?.replace("-", " ")}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={closeDetailPanel}
-                      className="text-white/80 hover:text-white transition-colors"
-                    >
-                      <X size={24} />
-                    </button>
-                  </div>
-                  
-                  {selectedApplication.status && (
-                    <div className="mt-4">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                        selectedApplication.status === 'pending' 
-                          ? 'bg-yellow-100 text-yellow-800' 
-                          : selectedApplication.status === 'accepted' 
-                          ? 'bg-green-100 text-green-800'
-                          : selectedApplication.status === 'rejected'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}>
-                        {selectedApplication.status.charAt(0).toUpperCase() + selectedApplication.status.slice(1)}
-                      </span>
-                    </div>
+                    ))
                   )}
                 </div>
-                
-                <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-250px)]">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <div className="flex items-start space-x-3">
-                        <Mail className="text-white/60 mt-1" size={20} />
-                        <div>
-                          <p className="text-sm text-white/80">Email</p>
-                          <p className="text-white">{selectedApplication.email}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start space-x-3">
-                        <Phone className="text-white/60 mt-1" size={20} />
-                        <div>
-                          <p className="text-sm text-white/80">Phone</p>
-                          <p className="text-white">{selectedApplication.phone}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start space-x-3">
-                        <MapPin className="text-white/60 mt-1" size={20} />
-                        <div>
-                          <p className="text-sm text-white/80">Address</p>
-                          <p className="text-white">{selectedApplication.address}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start space-x-3">
-                        <Calendar className="text-white/60 mt-1" size={20} />
-                        <div>
-                          <p className="text-sm text-white/80">Submitted</p>
-                          <p className="text-white">
-                            {formatDateTime(selectedApplication.submittedAt)}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start space-x-3">
-                        <FileText className="text-white/60 mt-1" size={20} />
-                        <div>
-                          <p className="text-sm text-white/80">Resume/CV</p>
-                          <p className="text-white">{selectedApplication.resume}</p>
-                          {selectedApplication.resume && selectedApplication.resume !== "No file uploaded" && (
-                            <button 
-                              onClick={viewResume}
-                              className="mt-2 flex items-center text-sm bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded transition-colors"
-                            >
-                              <Eye className="w-4 h-4 mr-1" />
-                              View Resume
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      {selectedApplication.socialLinks && (
-                        <div className="flex items-start space-x-3">
-                          <LinkIcon className="text-white/60 mt-1" size={20} />
-                          <div>
-                            <p className="text-sm text-white/80">Social Links</p>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {typeof selectedApplication.socialLinks === 'string' 
-                                ? selectedApplication.socialLinks.split(', ').map((link: string, index: number) => (
-                                    link.trim() && (
-                                      <a
-                                        key={index}
-                                        href={link.trim()}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-full transition-colors"
-                                      >
-                                        {new URL(link.trim()).hostname.replace("www.", "")}
-                                      </a>
-                                    )
-                                  ))
-                                : Array.isArray(selectedApplication.socialLinks) 
-                                ? selectedApplication.socialLinks.map((link: string, index: number) => (
-                                    link.trim() && (
-                                      <a
-                                        key={index}
-                                        href={link.trim()}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-full transition-colors"
-                                      >
-                                        {new URL(link.trim()).hostname.replace("www.", "")}
-                                      </a>
-                                    )
-                                  ))
-                                : null
-                              }
+              </div>
+            </div>
+
+            {/* Application Detail */}
+            {selectedApplication && (
+              <div className="lg:col-span-2">
+                <div className="bg-white shadow rounded-lg overflow-hidden">
+                  <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+                    <h2 className="text-lg font-medium text-gray-900">Application Details</h2>
+                    <button
+                      onClick={closeDetailPanel}
+                      className="text-gray-400 hover:text-gray-500"
+                    >
+                      <X className="h-6 w-6" />
+                    </button>
+                  </div>
+                  <div className="px-6 py-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900 mb-4">Personal Information</h3>
+                        <div className="space-y-4">
+                          <div className="flex items-start">
+                            <User className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
+                            <div>
+                              <p className="text-sm font-medium text-gray-500">Full Name</p>
+                              <p className="text-sm text-gray-900">{selectedApplication.name}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start">
+                            <MapPin className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
+                            <div>
+                              <p className="text-sm font-medium text-gray-500">Address</p>
+                              <p className="text-sm text-gray-900">{selectedApplication.address}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start">
+                            <Phone className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
+                            <div>
+                              <p className="text-sm font-medium text-gray-500">Phone</p>
+                              <p className="text-sm text-gray-900">{selectedApplication.phone}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start">
+                            <Mail className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
+                            <div>
+                              <p className="text-sm font-medium text-gray-500">Email</p>
+                              <p className="text-sm text-gray-900">{selectedApplication.email}</p>
                             </div>
                           </div>
                         </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900 mb-4">Application Information</h3>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Position</p>
+                            <p className="text-sm text-gray-900">{selectedApplication.role?.replace('-', ' ')}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Social Links</p>
+                            <p className="text-sm text-gray-900">
+                              {selectedApplication.socialLinks || 'None provided'}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Resume</p>
+                            <p className="text-sm text-gray-900">{selectedApplication.resume || 'Not provided'}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-500">Submitted</p>
+                            <p className="text-sm text-gray-900">{formatDateTime(selectedApplication.submittedAt)}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6">
+                      <h3 className="text-lg font-medium text-gray-900 mb-4">Cover Letter</h3>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <p className="text-sm text-gray-900 whitespace-pre-wrap">{selectedApplication.coverLetter}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-8 flex flex-wrap gap-3">
+                      <button
+                        onClick={() => updateApplicationStatus('accepted')}
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        <Check className="h-4 w-4 mr-2" />
+                        Accept
+                      </button>
+                      <button
+                        onClick={() => updateApplicationStatus('rejected')}
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Reject
+                      </button>
+                      <button
+                        onClick={openEmailModal}
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      >
+                        <Send className="h-4 w-4 mr-2" />
+                        Send Email
+                      </button>
+                      {selectedApplication.resumeData && (
+                        <button
+                          onClick={viewResume}
+                          className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                        >
+                          <Eye className="h-4 w-4 mr-2" />
+                          View Resume
+                        </button>
                       )}
                     </div>
                   </div>
-                        {/* Resume Dropdown Panel */}
-      {showResumeModal && (
-        <div className="mt-4 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden transition-all duration-300 ease-in-out w-full">
-          <div className="sticky top-0 bg-white/10 backdrop-blur-lg p-4 border-b border-white/20 flex justify-between items-center">
-            <h2 className="text-lg font-bold text-white">Resume: {selectedApplication?.name}</h2>
-            <div className="flex gap-2">
-              <button 
-                onClick={downloadResume}
-                className="flex items-center px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm"
-              >
-                <Download className="w-4 h-4 mr-1" />
-                Download
-              </button>
-              <button 
-                onClick={openResumeInNewTab}
-                className="flex items-center px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm"
-              >
-                <Eye className="w-4 h-4 mr-1" />
-                Open in New Tab
-              </button>
-              <button
-                onClick={closeResumeModal}
-                className="text-white/80 hover:text-white transition-colors p-1"
-              >
-                <X size={20} />
-              </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Pricing Management Tab */
+          <div className="bg-white shadow rounded-lg overflow-hidden">
+            <div className="px-6 py-5 border-b border-gray-200">
+              <h2 className="text-lg font-medium text-gray-900">Pricing Management</h2>
+            </div>
+            <div className="p-6">
+              <AdminPricingManagement />
             </div>
           </div>
-          
-          <div className="p-4">
-            {selectedApplication?.resumeData ? (
-              <div className="border border-white/20 rounded-xl overflow-hidden bg-white">
-                <iframe 
-                  src={selectedApplication.resumeData} 
-                  title="Resume Preview"
-                  className="w-full h-[calc(100vh-300px)]"
-                  onError={(e) => {
-                    // Handle case where iframe can't display the file
-                    const target = e.target as HTMLIFrameElement;
-                    target.style.display = 'none';
-                    const fallback = document.createElement('div');
-                    fallback.className = 'p-8 text-center';
-                    fallback.innerHTML = `
-                      <div class="p-8 text-center">
-                        <FileText class="mx-auto h-16 w-16 text-gray-400 mb-4" />
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">Preview Not Available</h3>
-                        <p class="text-gray-500 mb-4">The resume file format cannot be previewed directly.</p>
-                        <button id="downloadBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                          Download Resume
-                        </button>
-                      </div>
-                    `;
-                    target.parentNode?.appendChild(fallback);
-                    const downloadBtn = fallback.querySelector('#downloadBtn');
-                    if (downloadBtn) {
-                      downloadBtn.addEventListener('click', downloadResume);
-                    }
-                  }}
-                />
-              </div>
-            ) : (
-              <div className="bg-white/10 rounded-lg p-8 border border-white/20 text-center">
-                <FileText className="mx-auto h-16 w-16 text-white/60 mb-4" />
-                <h3 className="text-xl font-medium text-white mb-2">No Resume Available</h3>
-                <p className="text-white/80">
-                  This application was submitted without a resume file.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-         <div>
-                    <h4 className="text-lg font-semibold text-white mb-3">Cover Letter</h4>
-                    <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-                      <p className="text-white whitespace-pre-line">{selectedApplication.coverLetter}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Status Update Buttons */}
-                  <div className="flex flex-wrap gap-3 pt-4 border-t border-white/20">
-                    {selectedApplication.status !== 'accepted' && (
-                      <button
-                        onClick={() => updateApplicationStatus('accepted')}
-                        className="flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
-                      >
-                        <Check className="w-4 h-4 mr-2" />
-                        Accept
-                      </button>
-                    )}
-                    
-                    {selectedApplication.status !== 'rejected' && (
-                      <button
-                        onClick={() => updateApplicationStatus('rejected')}
-                        className="flex items-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-                      >
-                        <XCircle className="w-4 h-4 mr-2" />
-                        Reject
-                      </button>
-                    )}
-                    
-                    <button
-                      onClick={openEmailModal}
-                      className="flex items-center px-4 py-2 bg-white text-[#5300FF] hover:bg-[#5300FF] hover:text-white rounded-lg font-medium transition-colors"
-                    >
-                      <Send className="w-4 h-4 mr-2" />
-                      Contact Candidate
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg border border-white/20 h-full flex items-center justify-center">
-                <div className="text-center p-8">
-                  <FileText className="mx-auto h-12 w-12 text-white/60 mb-4" />
-                  <h3 className="text-lg font-medium text-white mb-2">Select an application</h3>
-                  <p className="text-white/80">Choose an application from the list to view details</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </main>
 
       {/* Email Modal */}
@@ -754,6 +624,65 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Resume Modal */}
+      {showResumeModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl max-w-4xl w-full border border-white/20">
+            <div className="sticky top-0 bg-white/10 backdrop-blur-lg p-6 border-b border-white/20 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-white">Resume: {selectedApplication?.name}</h2>
+              <button
+                onClick={closeResumeModal}
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-6">
+              {selectedApplication?.resumeData ? (
+                <div className="border border-white/20 rounded-xl overflow-hidden bg-white">
+                  <iframe 
+                    src={selectedApplication.resumeData} 
+                    title="Resume Preview"
+                    className="w-full h-[calc(100vh-300px)]"
+                    onError={(e) => {
+                      // Handle case where iframe can't display the file
+                      const target = e.target as HTMLIFrameElement;
+                      target.style.display = 'none';
+                      const fallback = document.createElement('div');
+                      fallback.className = 'p-8 text-center';
+                      fallback.innerHTML = `
+                        <div class="p-8 text-center">
+                          <FileText class="mx-auto h-16 w-16 text-gray-400 mb-4" />
+                          <h3 class="text-lg font-medium text-gray-900 mb-2">Preview Not Available</h3>
+                          <p class="text-gray-500 mb-4">The resume file format cannot be previewed directly.</p>
+                          <button id="downloadBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                            Download Resume
+                          </button>
+                        </div>
+                      `;
+                      target.parentNode?.appendChild(fallback);
+                      const downloadBtn = fallback.querySelector('#downloadBtn');
+                      if (downloadBtn) {
+                        downloadBtn.addEventListener('click', downloadResume);
+                      }
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="bg-white/10 rounded-lg p-8 border border-white/20 text-center">
+                  <FileText className="mx-auto h-16 w-16 text-white/60 mb-4" />
+                  <h3 className="text-xl font-medium text-white mb-2">No Resume Available</h3>
+                  <p className="text-white/80">
+                    This application was submitted without a resume file.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
